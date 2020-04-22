@@ -1,3 +1,9 @@
+# Dependencies
 node_modules/
+
+# Production
 dist/
 public/js/app.js
+
+# Hidden Vals
+.env
