@@ -1,36 +1,50 @@
 import * as React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import Home from './pages/Home';
+import Compose from './pages/Compose';
+import Admin from './pages/Admin';
+import Edit from './pages/Edit';
+import Details from './pages/Details';
+import TagFilter from './pages/TagFilter';
+import SearchResults from './pages/SearchResults';
+import NavBar from './components/NavBar';
+import JumboTron from './components/JumboTron';
 
-class App extends React.Component<IAppProps, IAppState> {
-	constructor(props: IAppProps) {
-		super(props);
-		this.state = {
-			name: null
-		};
-	}
-
-	async componentDidMount() {
-		try {
-			let r = await fetch('/api/hello');
-			let name = await r.json();
-			this.setState({ name });
-		} catch (error) {
-			console.log(error);
-		}
-	}
-
-	render() {
-		return (
-			<main className="container my-5">
-				<h1 className="text-primary text-center">Hello {this.state.name}!</h1>
-			</main>
-		);
-	}
+const App: React.FC<IAppProps> = () => {
+	return (
+		<BrowserRouter>
+			<JumboTron />
+			<Container>
+				<NavBar />
+				<Switch>
+					<Route exact path="/">
+						<Home />
+					</Route>
+					<Route exact path="/blogs/details/:id">
+						<Details /> 
+					</Route>
+					<Route exact path="/blogs/edit/:id">
+						<Edit /> 
+					</Route>
+					<Route exact path="/compose">
+						<Compose /> 
+					</Route>
+					<Route exact path="/admin">
+						<Admin /> 
+					</Route>
+					<Route exact path="/tags/:id">
+						<TagFilter /> 
+					</Route>
+					<Route exact path="/search">
+						<SearchResults />
+					</Route>
+				</Switch>
+			</Container>
+		</BrowserRouter>
+	);
 }
 
 export interface IAppProps {}
-
-export interface IAppState {
-	name: string;
-}
 
 export default App;
