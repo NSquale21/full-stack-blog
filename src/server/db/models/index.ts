@@ -14,6 +14,12 @@ export interface TAuthors {
     created_at?: Date;
 }
 
+export interface TBlogTags {
+    blog_id?: number;
+    tag_id?: number;
+    tag_name?: string;
+}
+
 export interface MySQLResponse {
     fieldCount: number,
     affectedRows: number,
