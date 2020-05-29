@@ -18,21 +18,8 @@ const AdminCard: React.FC<IAdminCardProps> = props => {
 	}
 	
 	return (
-		// <Col md={8}>
-		// 	<Card className="shadow-sm my-2">
-		// 		<Card.Body className="d-flex justify-content-between align-items-center">
-		// 			<img src={props.blog.image_url} className="preview" /> 
-		// 			<Card.Text>{props.blog.title}</Card.Text>
-		// 			<div /* className="d-flex flex-column" */>
-		// 				<Button onClick={handleDelete} className="shadow-sm"  variant="outline-primary">Delete</Button>
-		// 				<Link to={`/blogs/edit/${props.blog.id}`}className="btn btn-outline-primary">Edit</Link>
-		// 			</div>
-		// 		</Card.Body>
-		// 	</Card>
-		// </Col>
-
-		<Col md={8}>
-			<Card className="shadow-sm my-2 h-100" style={{ maxWidth: "640px" }}>
+		<Col md={6} className="offset-md-3">
+			<Card className="shadow-sm my-2 h-100">
 				<div className="row no-gutters">
 					<Col sm={5}>
 						<img className="card-img" src={props.blog.image_url} />
@@ -58,21 +45,4 @@ export interface IAdminCardProps {
 	pizza: () => Promise<void>;
 }
 
-export default AdminCard; 
-
-
-
-{/* <div className="card" style={{ maxWidth: "500px" }}>
-<div className="row no-gutters">
-		<div className="col-sm-5" style={{ background: "#868e96" }}>
-				<img src="images/sample.svg" className="card-img-top h-100" alt="..." />
-		</div>
-		<div className="col-sm-7">
-				<div className="card-body">
-						<h5 className="card-title">Alice Liddel</h5>
-						<p className="card-text">Alice is a freelance web designer and developer based in London. She is specialized in HTML5, CSS3, JavaScript, Bootstrap, etc.</p>
-						<a href="#" className="btn btn-primary stretched-link">View Profile</a>
-				</div>
-		</div>
-</div>
-</div> */}
+export default AdminCard;
