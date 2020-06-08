@@ -20,7 +20,7 @@ const Admin: React.FC<IAdminProps> = () => {
 	
 	return (
 		<main>
-			<section className="row justify-content-center">
+			<section className="row">
 				{blogs.map(blog => <AdminCard key={`admin-${blog.id}`} blog={blog} pizza={getBlogs} />)}
 			</section>
 		</main>
