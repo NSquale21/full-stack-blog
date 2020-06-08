@@ -17,7 +17,9 @@ export const Query = <T = any>(query: string, values?: Array<any> | { [key: stri
 
   import blogs from './queries/blogs';
   import blogtags from './queries/blogtags';
+  import comments from './queries/comments';
   export default {
     blogs,
-    blogtags
+    blogtags,
+    comments
   }

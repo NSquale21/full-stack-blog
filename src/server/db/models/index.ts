@@ -20,6 +20,14 @@ export interface TBlogTags {
     tag_name?: string;
 }
 
+export interface TComments {
+	id?: number;
+	content?: string;
+	created_at?: Date;
+	blog_id?: number;
+	authors_id: number;
+}
+
 export interface MySQLResponse {
     fieldCount: number,
     affectedRows: number,
