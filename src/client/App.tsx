@@ -21,7 +21,7 @@ const App: React.FC<IAppProps> = () => {
 					<Route exact path="/">
 						<Home />
 					</Route>
-					<Route exact path="/blogs/details/:id">
+					<Route exact path="/blogs/details/:id/:title?">
 						<Details /> 
 					</Route>
 					<Route exact path="/blogs/edit/:id">
