@@ -1,6 +1,3 @@
-// get endpoint that needs to have 
-// get; /blogid   send query as response
-
 import { Router } from 'express';
 import db from '../db';
 
@@ -17,7 +14,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/filter/:id', async (req, res) => {
-	const id = Number(req.params.id);
+	const id = req.params.id;
 	try {
 		const tags = await db.blogtags.filterTags(id);
 		res.json(tags);
