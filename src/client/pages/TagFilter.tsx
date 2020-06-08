@@ -12,8 +12,10 @@ const TagFilter: React.FC<ITagFilterProps> = () => {
   React.useEffect(() => {
     (async () => {
       let res = await fetch(`/api/blogtags/filter/${id}`);
-      let blogs = await res.json();
-      setBlogs(blogs);
+      if (res.ok) {
+        let blogs = await res.json();
+        setBlogs(blogs);
+      }
     })();
   }, [id]);
     
