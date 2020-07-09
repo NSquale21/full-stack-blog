@@ -24,29 +24,9 @@ const NavBar: React.FC<INavBarProps> = () => {
 			}
 		})();
 	}, []);
-
-
-// 	const FirstPage = props => {
-//     let history = useHistory();
-
-//     const someEventHandler = event => {
-//        history.push({
-//            pathname: '/secondpage',
-//            search: '?query=abc',
-//            state: { detail: 'some_value' }
-//        });
-//     };
-
-// };
-
-	// const searchFilter = blogs.filter(blog => blog.title.toLowerCase().includes(query.toLowerCase()));
-	// console.log(searchFilter);
-
 	
 	const enterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.which === 13) {
-			//push to /search/${query}
-			// push to a search page and console.log(parameter)
 			history.push({ 
 				pathname: '/search', 
 				search: `?query=${query}`,
@@ -60,25 +40,25 @@ const NavBar: React.FC<INavBarProps> = () => {
 			<Col>
 				<Nav className="justify-content-between border-bottom p-2" activeKey="/home">
 					<Nav.Item>
-						<NavLink to="/" activeClassName="text-danger">Home</NavLink>
+						<NavLink className="nav-link" exact to="/" activeClassName="text-secondary">Home</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="/music">Music</NavLink>
+						<NavLink className="nav-link" to="/music" activeClassName="text-secondary">Music</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="/tech">Tech</NavLink>
+						<NavLink className="nav-link" to="/tech" activeClassName="text-secondary">Tech</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="/travel">Travel</NavLink>
+						<NavLink className="nav-link" to="/travel" activeClassName="text-secondary">Travel</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="/compose">Compose</NavLink>
+						<NavLink className="nav-link" to="/compose" activeClassName="text-secondary">Compose</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="/admin">Admin</NavLink>
+						<NavLink className="nav-link" to="/admin" activeClassName="text-secondary">Admin</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink to="#" onClick={() => setShow(!show)}>Search</NavLink>
+						<NavLink className="nav-link" to="#" onClick={() => setShow(!show)}>Search</NavLink>
 					</Nav.Item>
 				</Nav>
 				<input 
