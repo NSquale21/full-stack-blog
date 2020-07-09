@@ -12,3 +12,13 @@ export interface ITag {
 	tag_name?: string;
 	id?: number;
 }
+
+export interface IComment {
+	id?: number;
+	content?: string;
+	username?: string;
+	avatar?: string;
+	created_at?: Date;
+	blog_id?: number;
+	authors_id: number;
+}

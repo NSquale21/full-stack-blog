@@ -10,6 +10,7 @@ import TagFilter from './pages/TagFilter';
 import SearchResults from './pages/SearchResults';
 import NavBar from './components/NavBar';
 import JumboTron from './components/JumboTron';
+import Footer from './components/Footer';
 
 const App: React.FC<IAppProps> = () => {
 	return (
@@ -41,6 +42,7 @@ const App: React.FC<IAppProps> = () => {
 					</Route>
 				</Switch>
 			</Container>
+			<Footer />
 		</BrowserRouter>
 	);
 }
