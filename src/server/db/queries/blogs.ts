@@ -1,9 +1,9 @@
 import { Query } from '../index';
 import type { TAuthors, TBlogs, MySQLResponse } from '../models';
 
-const all = () => Query<Array<TAuthors | TBlogs>>('SELECT blogs.*, authors.name FROM blogs JOIN authors ON blogs.author_id = authors.id');
+const all = () => Query<Array<TAuthors | TBlogs>>('SELECT blogs.*, authors.username AS name FROM blogs JOIN authors ON blogs.author_id = authors.id');
 
-const one = (id: number) => Query<Array<TAuthors | TBlogs>>('SELECT blogs.*, authors.name FROM blogs JOIN authors ON blogs.author_id = authors.id WHERE blogs.id = ?', [id]);
+const one = (id: number) => Query<Array<TAuthors | TBlogs>>('SELECT blogs.*, authors.username AS name FROM blogs JOIN authors ON blogs.author_id = authors.id WHERE blogs.id = ?', [id]);
 
 const insert = (title: string, content: string, image_url: string, author_id: number) => Query<MySQLResponse>('INSERT INTO blogs (title, content, image_url, author_id) VALUES (?)', [[title, content, image_url, author_id]]);
 

@@ -10,6 +10,7 @@ export interface TBlogs {
 export interface TAuthors {
     username?: string;
     email?: string;
+    avatar?: string;
     password?: string;
     created_at?: Date;
 }
@@ -22,7 +23,7 @@ export interface TBlogTags {
 
 export interface TComments {
 	id?: number;
-	content?: string;
+    content?: string;
 	created_at?: Date;
 	blog_id?: number;
 	authors_id: number;
