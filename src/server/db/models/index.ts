@@ -8,6 +8,7 @@ export interface TBlogs {
 }
 
 export interface TAuthors {
+    id?: number;
     username?: string;
     email?: string;
     avatar?: string;
@@ -38,4 +39,12 @@ export interface MySQLResponse {
     message: string,
     protocol41: boolean,
     changedRows: number
+}
+
+export interface TTokens {
+    id?: number;
+    author_id?: number;
+    uniq?: string;
+    val?: string;
+    created_at?: Date
 }

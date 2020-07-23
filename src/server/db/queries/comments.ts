@@ -5,9 +5,9 @@ const forBlog = (id: number) => Query<(TComments | TAuthors)[]>('SELECT comments
 
 const insertComment = (content: string, blog_id: number, author_id: number) => Query<MySQLResponse>('INSERT INTO comments (content, blog_id, authors_id) VALUES (?)', [[content, blog_id, author_id]]);
 
-const updateComment = (content: string, id: number) => Query<MySQLResponse>('UPDATE comments SET content = ? WHERE id = ?', [content, id]);
+const updateComment = (content: string, id: number, author_id: number) => Query<MySQLResponse>('UPDATE comments SET content = ? WHERE id = ? AND authors_id = ?', [content, id, author_id]);
 
-const destroyComment = (id: number) => Query<MySQLResponse>('DELETE FROM comments WHERE id = ?', [id]);
+const destroyComment = (id: number, author_id: number) => Query<MySQLResponse>('DELETE FROM comments WHERE id = ? AND authors_id = ?', [id, author_id]);
 
 const commentCount = (id: number) => Query<{ comment_count: number }[]>('SELECT COUNT(*) as comment_count FROM comments WHERE blog_id = ?', [id]);
 

@@ -16,5 +16,8 @@ export default {
 	app: {
 		port: parseInt(process.env.PORT, 10),
 		prefix: process.env.API_PREFIX
+	},
+	auth: {
+		secret: process.env.JWT_SECRET
 	}
 }

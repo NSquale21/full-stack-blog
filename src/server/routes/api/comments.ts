@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import db from '../db';
+import * as passport from 'passport';
+import type { ReqUser } from '../../utils/types';
+import db from '../../db';
 
 const router = Router();
 
@@ -25,10 +27,11 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/', passport.authenticate('jwt'), async (req: ReqUser, res) => {
 	const commentDTO = req.body;
+	const author_id = req.user.id;
 	try {
-		const result = await db.comments.insertComment(commentDTO.content, commentDTO.blog_id, commentDTO.author_id);
+		const result = await db.comments.insertComment(commentDTO.content, commentDTO.blog_id, author_id);
 		res.json(result);
 	} catch (error) {
 		console.log(error);
@@ -36,11 +39,12 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', passport.authenticate('jwt'), async(req: ReqUser, res) => {
 	const id = Number(req.params.id);
 	const commentDTO = req.body;
+	const author_id = req.user.id;
 	try {
-		const result = await db.comments.updateComment(commentDTO.content, id);
+		const result = await db.comments.updateComment(commentDTO.content, id, author_id);
 		res.json(result);
 	} catch (error) {
 		console.log(error);
@@ -48,10 +52,11 @@ router.put('/:id', async(req, res) => {
 	}
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', passport.authenticate('jwt'), async (req: ReqUser, res) => {
 	const id = Number(req.params.id);
+	const author_id = req.user.id;
 	try {
-		const result = await db.comments.destroyComment(id);
+		const result = await db.comments.destroyComment(id, author_id);
 		res.json({ msg: `Comment ${id} Deleted!`, result});
 	} catch (error) {
 		console.log(error);

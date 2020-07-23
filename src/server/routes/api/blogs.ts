@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import db from '../db';
+import * as passport from 'passport';
+import type { ReqUser } from '../../utils/types';
+import db from '../../db';
 
 const router = Router();
 
@@ -25,11 +27,12 @@ router.get('/:blogid', async (req, res) => {
 	}
 });
 
-router.post('/', async (req, res) => {
+router.post('/', passport.authenticate('jwt'), async (req: ReqUser, res) => {
 	const blogDTO = req.body;
+	const author_id = req.user.id;
 	try {
-		const result = await db.blogs.insert(blogDTO.title, blogDTO.content, blogDTO.image_url, blogDTO.author_id);
-		if (req.body.tag_id) {
+		const result = await db.blogs.insert(blogDTO.title, blogDTO.content, blogDTO.image_url, author_id);
+		if (Number(req.body.tag_id)) {
 			const tagsResult = await db.blogtags.insertBlogTags(result.insertId, req.body.tag_id);
 		}
 		res.json(result);
@@ -39,12 +42,13 @@ router.post('/', async (req, res) => {
 	}
 });
 
-router.put('/:blogid', async (req, res) => {
+router.put('/:blogid', passport.authenticate('jwt'), async (req: ReqUser, res) => {
 	const blogDTO = req.body;
 	const tagID = req.body.tag_id;
 	const blogid = Number(req.params.blogid);
+	const author_id = req.user.id;
 	try {
-		const result = await db.blogs.update(blogDTO.title, blogDTO.content, blogDTO.image_url, blogid);
+		const result = await db.blogs.update(blogDTO.title, blogDTO.content, blogDTO.image_url, blogid, author_id);
 		if (tagID) {
 			console.log(tagID, blogid);
 			const tagsResult = await db.blogtags.updateBlogTags(blogid, tagID);
@@ -57,10 +61,11 @@ router.put('/:blogid', async (req, res) => {
 	}
 });
 
-router.delete('/:blogid', async (req, res) => {
+router.delete('/:blogid', passport.authenticate('jwt'), async (req: ReqUser, res) => {
 	const blogid = Number(req.params.blogid);
+	const author_id = req.user.id;
 	try {
-		const result = await db.blogs.destroy(blogid);
+		const result = await db.blogs.destroy(blogid, author_id);
 		res.json({ msg: `Blog ${blogid} Deleted!`, result});
 	} catch (error) {
 		console.log(error);
