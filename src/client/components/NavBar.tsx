@@ -49,7 +49,7 @@ const NavBar: React.FC<INavBarProps> = () => {
 						<NavLink className="nav-link" to="/tech" activeClassName="text-secondary">Tech</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink className="nav-link" to="/travel" activeClassName="text-secondary">Travel</NavLink>
+						<NavLink className="nav-link" to="/login" activeClassName="text-secondary">Login</NavLink>
 					</Nav.Item>
 					<Nav.Item>
 						<NavLink className="nav-link" to="/compose" activeClassName="text-secondary">Compose</NavLink>
