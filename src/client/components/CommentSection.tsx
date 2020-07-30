@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { IComment } from '../utils/interfaces';
+import { api } from '../utils/api-services';
 import { Button, Dropdown, Form, Media, Modal } from 'react-bootstrap';
 import { BsThreeDots } from "react-icons/bs";
 
@@ -10,37 +11,25 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 
   const handleClose = () => setShow(false);
 	
-	const handleShow = (editComment) => {
+	const handleShow = (editComment: string) => {
 		setShow(true);
 		setComment(editComment);
 	}
 	
 	const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value);
 
-	const handleDelete = async(e: React.MouseEvent<HTMLButtonElement>) => {
+	const handleDelete = async(e: any) => {
 		e.preventDefault();
-		let res = await fetch(`/api/comments/${props.comments.id}`, {
-			method: 'DELETE',
-		});
-		if (res.ok) {
-			props.getComments();
-		}
+		let res = await api(`/api/comments/${props.comments.id}`, 'DELETE'); 
+		props.getComments();
 	};
 
 	const handleEdit = async(e: React.MouseEvent<HTMLInputElement>) => {
-		let res = await fetch(`/api/comments/${props.comments.id}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ content: comment })
-		});
-		if (res.ok) {
-			handleClose();
-			props.getComments();
-		}
+		let res = await api(`/api/comments/${props.comments.id}`, 'PUT', { content: comment });
+		handleClose();
+		props.getComments();
 	}
-
+	
 	return (
 		<>
 			<Media className="my-2">
@@ -95,5 +84,3 @@ export interface ICommentSectionProps {
 }
 
 export default CommentSection;
-
-// onClick={handleClose}

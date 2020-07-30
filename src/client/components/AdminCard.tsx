@@ -1,22 +1,17 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { IBlog } from '../utils/interfaces';
+import { api } from '../utils/api-services';
 import { Col, Card, Button } from 'react-bootstrap';
 
 const AdminCard: React.FC<IAdminCardProps> = props => {
 	
 	const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		let res = await fetch(`/api/blogs/${props.blog.id}`, {
-			method: 'DELETE',
-		});
-		if (res.ok) {
-			props.pizza();
-		} else {
-			console.log('Uh Oh!');
-		}
+		let res = await api(`/api/blogs/${props.blog.id}`, 'DELETE');
+		props.getBlogs();
 	}
-	
+
 	return (
 		<Col md={6} className="offset-md-3">
 			<Card className="shadow-sm my-2 h-100">
@@ -42,7 +37,7 @@ const AdminCard: React.FC<IAdminCardProps> = props => {
 
 export interface IAdminCardProps {
 	blog: IBlog;
-	pizza: () => Promise<void>;
+	getBlogs: () => Promise<void>;
 }
 
 export default AdminCard;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { IBlog } from '../utils/interfaces';
 import BlogCard from '../components/BlogCard';
+import blogsService from '../utils/blogs-service';
 
 const Home: React.FC<IHomeProps> = () => {
 	
@@ -8,13 +9,10 @@ const Home: React.FC<IHomeProps> = () => {
 	
 	React.useEffect(() => {
 		(async () => {
-			const res = await fetch('/api/blogs');
-			if (res.ok) {
-				const blogs = await res.json();
-				setBlogs(blogs);
-			}
+			const blogs = await blogsService.getAll();
+			setBlogs(blogs);
 		})();
-	}, []);
+}, []);
 	
 	return (
 		<main>

@@ -2,8 +2,9 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { Link } from 'react-router-dom';
 import { IBlog, ITag } from '../utils/interfaces';
-import { Card, Col } from 'react-bootstrap';
 import { urlRegex } from '../utils/url-regex';
+import { api } from '../utils/api-services';
+import { Card, Col } from 'react-bootstrap';
 
 const BlogCard: React.FC<IBlogCardProps> = props => {
 	
@@ -11,17 +12,16 @@ const BlogCard: React.FC<IBlogCardProps> = props => {
 	const name = `/tags/${tag?.tag_name}`;
 	
 	React.useEffect(() => {
-    (async () => {
-      let res = await fetch(`/api/blogs/${props.blog.id}`);
-      let blog = await res.json();
-      setTag(blog[1]);
-    })();
-	}, [props.blog.id]);
+		(async () => {
+		  let blog = await api(`/api/blogs/${props.blog.id}`);
+		  setTag(blog[1]);
+		})();
+		}, [props.blog.id]);
 	
 	return (
 		<Col className="my-2" md={3}>
 			<Card className="shadow-sm h-100">
-				<Card.Img className="imgage" variant="top" src={props.blog.image_url} />
+				<Card.Img className="imgage" alt="no image available" variant="top" src={props.blog.image_url} />
 				<Card.Body className="d-flex flex-column justify-content-between">
 					<div>
 						<Card.Title>{props.blog.title}</Card.Title>

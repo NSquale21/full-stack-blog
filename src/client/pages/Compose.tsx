@@ -3,6 +3,7 @@ import * as ReactMarkdown from 'react-markdown';
 import { ITag } from '../utils/interfaces';
 import { useHistory } from 'react-router-dom';
 import { Col, Form, Button, Card } from 'react-bootstrap';
+import { api } from '../utils/api-services';
 
 const Compose: React.FC<IComposeProps> = () => {
 
@@ -21,22 +22,13 @@ const Compose: React.FC<IComposeProps> = () => {
 
 	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		const res = await fetch('api/blogs', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ title, image_url, content, author_id: 1, tag_id: selectedId })
-		});
-		if(res.ok) {
-			history.push('/')
-		}
+		const res = await api('/api/blogs', 'POST', { title, image_url, content, tag_id: selectedId })
+		history.push('/');
 	}
 
 	React.useEffect(() => {
 		(async () => {
-			const res = await fetch('/api/blogtags');
-			const tags = await res.json();
+			const tags = await api('/api/blogtags');
 			setTags(tags);
 		})();
 	}, []);
@@ -76,7 +68,7 @@ const Compose: React.FC<IComposeProps> = () => {
 								value={content}
 								onChange={handleContentChange}
 								as="textarea" 
-								rows="3" 
+								rows={3}
 								placeholder="Enter text here..." />
 							<Form.Text className="text-muted">Markdown is supported.</Form.Text>
 						</Form.Group>

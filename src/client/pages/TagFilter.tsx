@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { IBlog, ITag } from '../utils/interfaces';
+import { api } from '../utils/api-services';
 import BlogCard from '../components/BlogCard';
 
 const TagFilter: React.FC<ITagFilterProps> = () => {
@@ -11,14 +12,11 @@ const TagFilter: React.FC<ITagFilterProps> = () => {
 
   React.useEffect(() => {
     (async () => {
-      let res = await fetch(`/api/blogtags/filter/${id}`);
-      if (res.ok) {
-        let blogs = await res.json();
-        setBlogs(blogs);
-      }
+      let blogs = await api(`/api/blogtags/filter/${id}`);
+      setBlogs(blogs);
     })();
   }, [id]);
-    
+  
   return (
 		<main>
 			<section className="row justify-content-center">
