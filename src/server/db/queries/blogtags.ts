@@ -1,4 +1,3 @@
-// execute the query from workbench
 import { Query } from '../index';
 import { TBlogTags, MySQLResponse, TBlogs } from '../models';
 
@@ -10,11 +9,7 @@ const insertBlogTags = (blog_id: number, tag_id: number) => Query<MySQLResponse>
 
 const updateBlogTags = (blog_id: number, tag_id: string) => Query<MySQLResponse>('UPDATE blog_tags SET tag_id = ? WHERE blog_id = ?', [tag_id, blog_id]);
 
-const filterTags = (tag_name: string) => Query<Array<TBlogTags | TBlogs>>('SELECT blog_tags.*, blogs.* FROM blog_tags JOIN blogs ON blog_tags.blog_id = blogs.id JOIN tags ON blog_tags.tag_id = tags.id WHERE tag_name = ?;', [tag_name]);
-
-// const filterTags = (tag_name: string) => Query<Array<TBlogTags | TBlogs>>('SELECT * FROM blog_tags JOIN blogs ON blog_tags.blog_id = blogs.id JOIN tags ON blog_tags.tag_id = tags.id WHERE tag_name = ?;', [tag_name]);
-
-// const filterTags = (tag_id: number) => Query<Array<TBlogTags | TBlogs>>('SELECT * FROM blog_tags JOIN blogs ON blog_tags.blog_id = blogs.id WHERE tag_id = ?;', [tag_id]);
+const filterTags = (tag_name: string) => Query('CALL filterTags(?)', [tag_name]);
 
 export default {
     getTags,
@@ -23,8 +18,3 @@ export default {
     updateBlogTags,
     filterTags
 }
-
-// SELECT * from blog_tags
-// JOIN blogs ON blog_tags.blog_id = blogs.id
-// JOIN tags ON blog_tags.tag_id = tags.id
-// WHERE tag_name = 'music';

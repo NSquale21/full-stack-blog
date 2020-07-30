@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 router.get('/filter/:id', async (req, res) => {
 	const id = req.params.id;
 	try {
-		const tags = await db.blogtags.filterTags(id);
+		const [tags] = await db.blogtags.filterTags(id);
 		res.json(tags);
 	} catch (error) {
 		console.log(error);
