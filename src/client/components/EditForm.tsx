@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { IBlog, ITag } from '../utils/interfaces';
 import { useParams, useHistory } from 'react-router-dom';
+import { api } from '../utils/api-services';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
 const EditForm: React.FC<IEditFormProps> = () => {
@@ -23,35 +24,25 @@ const EditForm: React.FC<IEditFormProps> = () => {
 
 	React.useEffect(() => {
 		(async () => {
-			const res = await fetch(`/api/blogs/${id}`);
-			const resTags = await fetch('/api/blogtags');
-			if (res.ok) {
-				const blog = await res.json();
-				const tags = await resTags.json();
-				setBlog(blog);
-				setTitle(blog[0].title);
-				setURL(blog[0].image_url);
+			const blog = await api(`/api/blogs/${id}`);
+			const tags = await api('/api/blogtags');
+			setBlog(blog);
+			setTitle(blog[0].title);
+			setURL(blog[0].image_url);
+			if (blog[1]) {
 				setSelectedId(blog[1].id);
-				setContent(blog[0].content);
-				setTags(tags);
 			}
+			setContent(blog[0].content);
+			setTags(tags);
 		})();
 	}, []);
 	
 	const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		const res = await fetch(`/api/blogs/${id}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ title, image_url, content, tag_id: selectedId })
-		});
-		if(res.ok) {
-			history.push(`/blogs/details/${id}`);
-		}
+		const res = await api(`/api/blogs/${id}`, 'PUT', { title, image_url, content, tag_id: selectedId });
+		history.push(`/blogs/details/${id}`);
 	}
-	
+
 	return (
 		<main>
 			<section className="row">
@@ -87,7 +78,7 @@ const EditForm: React.FC<IEditFormProps> = () => {
 								value={content}
 								onChange={handleContentChange}
 								as="textarea" 
-								rows="3" 
+								rows={3}
 								placeholder="Enter text here..." />
 							<Form.Text className="text-muted">Markdown is supported.</Form.Text>
 						</Form.Group>
