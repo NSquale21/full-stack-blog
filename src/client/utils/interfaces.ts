@@ -22,3 +22,14 @@ export interface IComment {
 	blog_id?: number;
 	authors_id: number;
 }
+
+export interface IProfile {
+	profile: {
+		id?: number;
+		username?: string;
+		email?: string;
+		avatar?: string;
+		created_at?: Date;
+	},
+	blogs: IBlog[]
+}
