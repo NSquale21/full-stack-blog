@@ -19,9 +19,9 @@ const BlogCard: React.FC<IBlogCardProps> = props => {
 		}, [props.blog.id]);
 	
 	return (
-		<Col className="my-2" md={3}>
+		<Col className="my-2" md={6} lg={6} xl={4}>
 			<Card className="shadow-sm h-100">
-				<Card.Img className="imgage" alt="no image available" variant="top" src={props.blog.image_url} />
+				<Card.Img alt="no image available" variant="top" src={props.blog.image_url} />
 				<Card.Body className="d-flex flex-column justify-content-between">
 					<div>
 						<Card.Title>{props.blog.title}</Card.Title>
