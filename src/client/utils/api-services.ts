@@ -1,12 +1,21 @@
-import { application } from "express"
+export let Token: string = localStorage.getItem('token') || null;
+
+export const logout = () => {
+    Token = null;
+    localStorage.clear();
+}
+
+export const setLogin = (token: string) => {
+    Token = token;
+    localStorage.setItem('token', Token);
+}
 
 export const api = async <T = any> (uri: string, method: string = 'GET', body?: {}) => {
     const headers: Headers = {
         'Content-Type': 'application/json'
     }
-    const token = localStorage.getItem('token');
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+    if (Token) {
+        headers['Authorization'] = `Bearer ${Token}`;
     }
     try {
         const res = await fetch(uri, {

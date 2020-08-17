@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
+import { api, Token, logout } from '../utils/api-services';
 import { IBlog } from '../utils/interfaces';
 import { Nav, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -16,15 +17,13 @@ const NavBar: React.FC<INavBarProps> = () => {
 
 	React.useEffect(() => {
 		(async () => {
-			let res = await fetch('/api/blogs');
-			if (res.ok) {
-				let data: IBlog[] = await res.json();
-				let blogs = data.map(blog => ({ id: blog.id, title: blog.title }));
-				setBlogs(blogs);
-			}
+			let res = await api('/api/blogs');
+			let data: IBlog[] = await res.json();
+			let blogs = data.map(blog => ({ id: blog.id, title: blog.title }));
+			setBlogs(blogs);
 		})();
 	}, []);
-	
+
 	const enterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.which === 13) {
 			history.push({ 
@@ -40,25 +39,56 @@ const NavBar: React.FC<INavBarProps> = () => {
 			<Col>
 				<Nav className="justify-content-between border-bottom p-2" activeKey="/home">
 					<Nav.Item>
-						<NavLink className="nav-link" exact to="/" activeClassName="text-secondary">Home</NavLink>
+						<NavLink 
+							onClick={() => setShow(false)}
+							className="nav-link" 
+							exact to="/" 
+							activeClassName="text-secondary">
+							Home
+						</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink className="nav-link" to="/music" activeClassName="text-secondary">Music</NavLink>
+						<NavLink
+							onClick={() => setShow(false)}
+							className="nav-link" 
+							to="/contact" 
+							activeClassName="text-secondary">
+							Contact
+						</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink className="nav-link" to="/tech" activeClassName="text-secondary">Tech</NavLink>
+						<NavLink 
+							onClick={() => setShow(false)}
+							className="nav-link" 
+							to="/donate" 
+							activeClassName="text-secondary">Donate</NavLink>
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink className="nav-link" to="/login" activeClassName="text-secondary">Login</NavLink>
+						{Token ? (
+							<NavLink 
+								onClick={() => {
+									setShow(false);
+									logout()}}
+								className="nav-link" 
+								exact to="/">
+								Logout
+							</NavLink>
+						) : (
+							<NavLink 
+								onClick={() => setShow(false)}
+								className="nav-link" 
+								to="/login" 
+								activeClassName="text-secondary">
+								Login
+							</NavLink>)}
 					</Nav.Item>
 					<Nav.Item>
-						<NavLink className="nav-link" to="/compose" activeClassName="text-secondary">Compose</NavLink>
-					</Nav.Item>
-					<Nav.Item>
-						<NavLink className="nav-link" to="/admin" activeClassName="text-secondary">Admin</NavLink>
-					</Nav.Item>
-					<Nav.Item>
-						<NavLink className="nav-link" to="#" onClick={() => setShow(!show)}>Search</NavLink>
+						<NavLink 
+							onClick={() => setShow(!show)}
+							className="nav-link" 
+							to="#">
+							Search
+						</NavLink>
 					</Nav.Item>
 				</Nav>
 				<input 

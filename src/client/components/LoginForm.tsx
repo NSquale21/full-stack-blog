@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Col, Button, Form } from 'react-bootstrap';
-import { api } from '../utils/api-services';
+import { api, setLogin } from '../utils/api-services';
 
 const LoginForm: React.FC<ILoginFormProps> = () => {
 
@@ -37,6 +37,7 @@ const LoginForm: React.FC<ILoginFormProps> = () => {
 		e.preventDefault();
 		const info = await api('/auth/login', 'POST', values);
 		localStorage.setItem('token', info);
+		setLogin(info);
 		history.push('/compose');
 	};
 

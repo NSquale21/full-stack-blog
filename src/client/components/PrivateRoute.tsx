@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { Token } from '../utils/api-services';
 
 const PrivateRoute: React.FC<IPrivateRoute> = ({ children, ...rest }) => {
     
@@ -8,10 +9,9 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({ children, ...rest }) => {
 
     React.useEffect(() => {
         (async () => {
-            let token = localStorage.getItem('token');
             const check = await fetch('/auth/tokens/check', {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${Token}`
                 }
             });
             if (check.ok) {
