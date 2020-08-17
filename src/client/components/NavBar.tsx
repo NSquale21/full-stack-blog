@@ -17,8 +17,8 @@ const NavBar: React.FC<INavBarProps> = () => {
 
 	React.useEffect(() => {
 		(async () => {
-			let res = await api('/api/blogs');
-			let data: IBlog[] = await res.json();
+			let data = await api('/api/blogs');
+			// let data: IBlog[] = await res.json();
 			let blogs = data.map(blog => ({ id: blog.id, title: blog.title }));
 			setBlogs(blogs);
 		})();
