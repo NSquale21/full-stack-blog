@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { IBlog } from '../utils/interfaces';
+import { api } from '../utils/api-services';
 import BlogCard from '../components/BlogCard';
 
 const SearchResults: React.FC<ISearchResultsProps> = props => {
@@ -11,11 +12,8 @@ const SearchResults: React.FC<ISearchResultsProps> = props => {
 
 	React.useEffect(() => {
 		(async () => {
-			const res = await fetch('/api/blogs');
-			if (res.ok) {
-				const blogs = await res.json();
-				setBlogs(blogs);
-			}
+			const blogs = await api('/api/blogs');
+			setBlogs(blogs);
 		})();
 	}, []);
 

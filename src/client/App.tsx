@@ -9,7 +9,8 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Edit from './pages/Edit';
 import Details from './pages/Details';
-import Contact from './pages/Contact'
+import Contact from './pages/Contact';
+import Donate from './pages/Donate';
 import TagFilter from './pages/TagFilter';
 import SearchResults from './pages/SearchResults';
 import NavBar from './components/NavBar';
@@ -44,6 +45,9 @@ const App: React.FC<IAppProps> = () => {
 					</Route>
 					<Route exact path="/contact">
 						<Contact /> 
+					</Route>
+					<Route exact path="/donate">
+						<Donate /> 
 					</Route>
 					<PrivateRoute exact path="/compose">
 						<Compose /> 

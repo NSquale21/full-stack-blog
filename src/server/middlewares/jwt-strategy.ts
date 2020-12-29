@@ -9,8 +9,9 @@ passport.use(new passportJwt.Strategy({
     secretOrKey: config.auth.secret
 }, async (payload: IPayload, done) => {
     try {
-        const [author] = await db.authors.find('id', payload.author_id);
-        if (author) {
+        const [author] = await db.tokens.match(payload.id, payload.author_id, payload.uniq);
+        // 0 = not banned, 1 = banned
+        if (author && author.banned === 0) {
             delete author.password;
             done(null, author);
         } else {

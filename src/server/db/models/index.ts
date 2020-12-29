@@ -13,6 +13,7 @@ export interface TAuthors {
     email?: string;
     avatar?: string;
     password?: string;
+    banned?: number;
     created_at?: Date;
 }
 

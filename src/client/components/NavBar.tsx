@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { api, Token, logout } from '../utils/api-services';
 import { IBlog } from '../utils/interfaces';
 import { Nav, Col } from 'react-bootstrap';
@@ -9,20 +9,11 @@ const NavBar: React.FC<INavBarProps> = () => {
 	
 	const [show, setShow] = React.useState(false);
 	const [query, setQuery] = React.useState('');
-	const [blogs, setBlogs] = React.useState<IBlog[]>([]);
 
 	const history = useHistory();
+	const location = useLocation();
 
 	const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value);
-
-	React.useEffect(() => {
-		(async () => {
-			let data = await api('/api/blogs');
-			// let data: IBlog[] = await res.json();
-			let blogs = data.map(blog => ({ id: blog.id, title: blog.title }));
-			setBlogs(blogs);
-		})();
-	}, []);
 
 	const enterPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.which === 13) {

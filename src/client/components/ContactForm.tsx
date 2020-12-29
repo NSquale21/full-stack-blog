@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
+import { api } from '../utils/api-services';
 
 const ContactForm: React.FC<IContactFormProps> = () => {
     
     const [values, setValues] = React.useState<{ [key: string]: string }>({
-        name: '',
         email: '',
+    	subject: '',
         message: ''
     });
 
@@ -14,23 +15,14 @@ const ContactForm: React.FC<IContactFormProps> = () => {
 		setValues((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
     };
 
-    const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleContact = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		console.log('message sent!');
+		await api('/api/contact', 'POST', {...values});
 	};
     
     return(
         <Col md={8}>
 			<Form className="border rounded p-3">
-                <Form.Group>
-					<Form.Label>Name</Form.Label>
-					<Form.Control
-						value={values.name || ''}
-                        onChange={handleChange}
-                        name="name"
-                        type="text"
-						placeholder="Your name" />
-				</Form.Group>
                 <Form.Group>
 					<Form.Label>Email</Form.Label>
 					<Form.Control
@@ -41,6 +33,15 @@ const ContactForm: React.FC<IContactFormProps> = () => {
 						placeholder="Your email" />
 				</Form.Group>
 				<Form.Group>
+					<Form.Label>Subject</Form.Label>
+					<Form.Control
+						value={values.subject || ''}
+                        onChange={handleChange}
+                        name="subject"
+                        type="text"
+						placeholder="Subject" />
+				</Form.Group>
+				<Form.Group>
 					<Form.Label>Message</Form.Label>
 					<Form.Control 
 						value={values.message || ''}
@@ -49,9 +50,9 @@ const ContactForm: React.FC<IContactFormProps> = () => {
 						type="text" 
 						placeholder="Your message"
                         as="textarea"
-                        rows="5" />
+                        rows={5} />
 				</Form.Group>
-				<Button onClick={handleLogin} variant="outline-primary" type="submit" className="w-75 mx-auto" block>
+				<Button onClick={handleContact} variant="outline-primary" type="submit" className="w-75 mx-auto" block>
 					Send
 				</Button>
 			</Form>
