@@ -8,5 +8,5 @@ export interface IPayload {
 }
 
 export interface ReqUser extends Request {
-    user: TAuthors
+    user?: TAuthors
 }
