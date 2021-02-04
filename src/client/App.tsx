@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Home from './pages/Home';
 import Compose from './pages/Compose';
-import Admin from './pages/Admin';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -18,7 +17,7 @@ import JumboTron from './components/JumboTron';
 import Footer from './components/Footer';
 import PrivateRoute from './components/PrivateRoute';
 
-const App: React.FC<IAppProps> = () => {
+const App = () => {
 	return (
 		<BrowserRouter>
 			<JumboTron />
@@ -40,9 +39,6 @@ const App: React.FC<IAppProps> = () => {
 					<Route exact path="/register">
 						<Register /> 
 					</Route>
-					<Route exact path="/profile">
-						<Profile /> 
-					</Route>
 					<Route exact path="/contact">
 						<Contact /> 
 					</Route>
@@ -52,8 +48,8 @@ const App: React.FC<IAppProps> = () => {
 					<PrivateRoute exact path="/compose">
 						<Compose /> 
 					</PrivateRoute>
-					<PrivateRoute exact path="/admin">
-						<Admin /> 
+					<PrivateRoute exact path="/profile">
+						<Profile /> 
 					</PrivateRoute>
 					<Route exact path="/tags/:id">
 						<TagFilter /> 
@@ -66,8 +62,20 @@ const App: React.FC<IAppProps> = () => {
 			<Footer />
 		</BrowserRouter>
 	);
-}
+};
 
-export interface IAppProps {}
+const style = [
+	'background: linear-gradient(#0091ea, #19272f)',
+	'border: 1px solid #0091ea',
+	'color: white',
+	'padding: 1px 5px',
+	'display: block',
+	'line-height: 40px',
+	'text-align: center',
+	'font-weight: bold',
+	'font-size: large'
+  ].join(';');
+  console.log('%cI am looking to get hired...if you like my project, we should talk:', style);
+  console.log('%cNSquale212@gmail.com', style);
 
 export default App;
