@@ -4,7 +4,7 @@ import { api } from '../utils/api-services';
 import { Button, Dropdown, Form, Media, Modal } from 'react-bootstrap';
 import { BsThreeDots } from "react-icons/bs";
 
-const CommentSection: React.FC<ICommentSectionProps> = props => {
+const CommentSection = (props: CommentSectionProps) => {
 
 	const [show, setShow] = React.useState(false);
 	const [comment, setComment] = React.useState<string>('');
@@ -14,7 +14,7 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 	const handleShow = (editComment: string) => {
 		setShow(true);
 		setComment(editComment);
-	}
+	};
 	
 	const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value);
 
@@ -28,7 +28,7 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 		let res = await api(`/api/comments/${props.comments.id}`, 'PUT', { content: comment });
 		handleClose();
 		props.getComments();
-	}
+	};
 	
 	return (
 		<>
@@ -41,10 +41,10 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 					alt="Generic placeholder"
 				/>
 				<Media.Body>
-					<h5>{props.comments.username}</h5>
-					<p>{props.comments.content}</p>
+					<h5 className="title">{props.comments.username}</h5>
+					<p className="dark-gray">{props.comments.content}</p>
 				</Media.Body>
-				<Dropdown className="my-auto">
+				<Dropdown className={`my-auto ${props.comments.authors_id != props.user && 'disabledbutton'}`}>
 					<Dropdown.Toggle variant="outline-primary" size="sm" id="dropdown-basic">
 						<BsThreeDots />
 					</Dropdown.Toggle>
@@ -55,9 +55,9 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 				</Dropdown>
 			</Media>
 			<Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Comment</Modal.Title>
-        </Modal.Header>
+				<Modal.Header closeButton>
+					<Modal.Title>Edit Comment</Modal.Title>
+				</Modal.Header>
 				<Modal.Body>
 					<Form.Control
 						value={comment}
@@ -65,22 +65,24 @@ const CommentSection: React.FC<ICommentSectionProps> = props => {
 						as="textarea"
 					/>
 				</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleEdit}>
-            Save Changes
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={handleEdit}>
+						Save Changes
+					</Button>
+					<Button variant="primary" onClick={handleClose}>
+						Close
+					</Button>
+				</Modal.Footer>
+      		</Modal>
 		</>
 	);
-}
+};
 
-export interface ICommentSectionProps {
+export interface CommentSectionProps {
 	comments: IComment;
+	user?: number;
 	getComments: () => void;
+	childen?: React.ReactNode;
 }
 
 export default CommentSection;

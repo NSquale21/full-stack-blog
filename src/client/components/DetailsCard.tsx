@@ -1,33 +1,37 @@
 import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
-import { IBlog, ITag, IComment } from '../utils/interfaces';
+import { api, Token } from '../utils/api-services';
+import { IBlog, ITag, IComment, IProfile } from '../utils/interfaces';
 import { Button, Card, Col, Form } from 'react-bootstrap';
 import CommentSection from '../components/CommentSection';
 
-const DetailsCard: React.FC<IDetailsCardsProps> = props => {  
+const DetailsCard = (props: DetailsCardsProps) => {  
 
-  const { id } = useParams();
+  const { id } = useParams<{ id: string}>();
   
   const [comment, setComment] = React.useState<string>('');
+  const [user, setUser] = React.useState<number>(null);
   
   const handleCommentChange = (e: React.ChangeEvent<HTMLInputElement>) => setComment(e.target.value);
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    const res = await fetch(`/api/comments`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ content: comment, blog_id: id, author_id: 2 })
-      });
-      if (res.ok) {
-        setComment('');
-        props.getComments();
-      }
+    // if (Token) {
+      e.preventDefault();
+      const res = await api('/api/comments', 'POST', { content: comment, blog_id: id });
+      props.getComments();
+    // } else {
+    //   alert('You must be logged in to leave a comment!');
+    // }
   };
-  
+
+  React.useEffect(() => {
+		(async () => {
+		  const user = await api('/api/authors/profile');
+		  setUser(user?.profile.id);
+		})();
+	  }, []);
+
   return (
     <>
       <section className="row">
@@ -37,7 +41,7 @@ const DetailsCard: React.FC<IDetailsCardsProps> = props => {
         <Col md={8}>
           <Card className="border-0">
             <Card.Body className="p-0">
-              <Card.Title>{props.blog?.title}</Card.Title>
+              <Card.Title className="title">{props.blog?.title}</Card.Title>
               <Card.Subtitle className="text-muted">By: {props.blog?.name}</Card.Subtitle>
               <a href="#" className="badge badge-primary my-2">{props.tag?.tag_name}</a>
               <ReactMarkdown source={props.blog?.content}></ReactMarkdown>
@@ -52,8 +56,7 @@ const DetailsCard: React.FC<IDetailsCardsProps> = props => {
               <Form.Label>Leave A Comment</Form.Label>
               <Form.Control 
                 value={comment}
-                onChange={handleCommentChange}
-                type="email" 
+                onChange={handleCommentChange} 
                 placeholder="Join the conversation..." />
             </Form.Group>
             <Button variant="primary" type="submit" size="sm" onClick={handleSubmit}>
@@ -61,7 +64,7 @@ const DetailsCard: React.FC<IDetailsCardsProps> = props => {
             </Button>
           </Form>
           {props.comments.map(comment => (
-            <CommentSection comments={comment} getComments={props.getComments} />
+            <CommentSection comments={comment} getComments={props.getComments} user={user} />
         ))}
         </Col>
       </section>
@@ -69,11 +72,13 @@ const DetailsCard: React.FC<IDetailsCardsProps> = props => {
 	);
 };
 
-export interface IDetailsCardsProps {
-  blog: IBlog,
+export interface DetailsCardsProps {
+  blog: IBlog;
   tag?: ITag;
   comments?: IComment[];
+  user?: number;
   getComments: () => void;
+  childen?: React.ReactNode;
 }
 
 export default DetailsCard;
