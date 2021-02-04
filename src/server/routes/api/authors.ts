@@ -16,4 +16,15 @@ router.get('/profile', passport.authenticate('jwt'), async (req: ReqUser, res) =
 	}
 });
 
+router.get('/profile/comments', passport.authenticate('jwt'), async (req: any, res) => {
+    const author_id = req.user.id;
+    try {
+        const commentAuthor = await db.comments.commentAuthor(author_id);
+        res.json(commentAuthor);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ error: 'Uh oh!' });
+	}
+});
+
 export default router;

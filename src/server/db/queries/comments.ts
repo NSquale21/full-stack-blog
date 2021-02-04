@@ -11,10 +11,13 @@ const destroyComment = (id: number, author_id: number) => Query<MySQLResponse>('
 
 const commentCount = (id: number) => Query<{ comment_count: number }[]>('SELECT COUNT(*) as comment_count FROM comments WHERE blog_id = ?', [id]);
 
+const commentAuthor = (authors_id: number) => Query('SELECT * FROM comments WHERE authors_id = ?', [authors_id]);
+
 export default {
   forBlog,
   insertComment,
   updateComment,
   destroyComment,
-  commentCount
+  commentCount,
+  commentAuthor
 }
