@@ -1,23 +1,31 @@
 import * as React from 'react';
-import type { IProfile } from '../utils/interfaces';
+import { IBlog } from '../utils/interfaces';
 import { api } from '../utils/api-services';
+import ProfileCard from '../components/ProfileCard';
 
-const Profile: React.FC<IProfileProps> = () => {
-    
-    const [profile, setProfile] = React.useState<IProfile>(null);
+const Profile = () => {
+	
+	const [blogs, setBlogs] = React.useState<IBlog[]>([]);
 
-    React.useEffect(() => {
-        api('/api/authors/profile')
-        .then(profile => setProfile(profile));
-    }, []);
-    
-    return (
-        <div className="row justify-content-center">
-            <h1>Welcome back,{profile?.profile.username}!</h1>
-        </div>
-    );
-}
-
-export interface IProfileProps {}
+	const getBlogs = async () => {
+		const authorsBlogs = await api('/api/authors/profile');
+		setBlogs(authorsBlogs.blogs);
+	};
+	
+	React.useEffect(() => {
+		getBlogs();
+	}, []);
+	
+	return (
+		<main className="page-container">
+			<div className="d-flex justify-content-center">
+				<a href="/compose" className="shadow-sm btn btn-outline-primary mb-5 new-blog-button">New Blog</a>
+			</div>
+			<section className="row">
+				{blogs.map(blog => <ProfileCard key={`admin-${blog.id}`} blog={blog} getBlogs={getBlogs} />)}
+			</section>
+		</main>
+	);
+};
 
 export default Profile;
