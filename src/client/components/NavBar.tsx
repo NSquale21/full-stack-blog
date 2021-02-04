@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { api, Token, logout } from '../utils/api-services';
-import { IBlog } from '../utils/interfaces';
-import { Nav, Col } from 'react-bootstrap';
+import { Token, logout } from '../utils/api-services';
 import { NavLink } from 'react-router-dom';
+import { Nav, Col } from 'react-bootstrap';
 
-const NavBar: React.FC<INavBarProps> = () => {
+const NavBar = () => {
 	
-	const [show, setShow] = React.useState(false);
-	const [query, setQuery] = React.useState('');
-
 	const history = useHistory();
 	const location = useLocation();
+
+	const [show, setShow] = React.useState(false);
+	const [query, setQuery] = React.useState('');
 
 	const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value);
 
@@ -23,7 +22,7 @@ const NavBar: React.FC<INavBarProps> = () => {
 				state: { query }
 			});
 		}
-	}
+	};
 	
 	return (
 		<header className="row my-5">
@@ -53,6 +52,24 @@ const NavBar: React.FC<INavBarProps> = () => {
 							className="nav-link" 
 							to="/donate" 
 							activeClassName="text-secondary">Donate</NavLink>
+					</Nav.Item>
+					<Nav.Item>
+						{Token ? (
+							<NavLink
+								onClick={() => setShow(false)}
+								className="nav-link" 
+								to="/profile" 
+								activeClassName="text-secondary">
+								Profile
+							</NavLink>
+						) : (
+							<NavLink
+								onClick={() => setShow(false)}
+								className="nav-link" 
+								to="/login" 
+								activeClassName="text-secondary">
+								Profile
+							</NavLink>)}
 					</Nav.Item>
 					<Nav.Item>
 						{Token ? (
@@ -92,8 +109,6 @@ const NavBar: React.FC<INavBarProps> = () => {
 			</Col>
 		</header>
 	);
-}
-
-export interface INavBarProps {}
+};
 
 export default NavBar;
