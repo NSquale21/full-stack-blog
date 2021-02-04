@@ -4,9 +4,9 @@ import { IBlog, ITag } from '../utils/interfaces';
 import { api } from '../utils/api-services';
 import BlogCard from '../components/BlogCard';
 
-const TagFilter: React.FC<ITagFilterProps> = () => {
+const TagFilter = () => {
   
-  const { id } = useParams();
+  const { id } = useParams<{ id: string}>();
   
   const [blogs, setBlogs] = React.useState<Array<IBlog | ITag>>([]);
 
@@ -25,7 +25,5 @@ const TagFilter: React.FC<ITagFilterProps> = () => {
 		</main>
   );
 };
-  
-export interface ITagFilterProps {}
   
 export default TagFilter;

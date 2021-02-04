@@ -4,7 +4,7 @@ import BlogCard from '../components/BlogCard';
 import blogsService from '../utils/blogs-service';
 import { Row } from 'react-bootstrap';
 
-const Home: React.FC<IHomeProps> = () => {
+const Home = () => {
 	
 	const [blogs, setBlogs] = React.useState<IBlog[]>([]);
 	
@@ -22,8 +22,6 @@ const Home: React.FC<IHomeProps> = () => {
 			</Row>
 		</main>
 	);
-}
-
-export interface IHomeProps {}
+};
 
 export default Home;

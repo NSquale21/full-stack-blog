@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Button, Col, Form } from 'react-bootstrap';
 import { api } from '../utils/api-services';
+import { Button, Col, Form } from 'react-bootstrap';
 
-const ContactForm: React.FC<IContactFormProps> = () => {
+const ContactForm = () => {
     
     const [values, setValues] = React.useState<{ [key: string]: string }>({
         email: '',
@@ -58,8 +58,6 @@ const ContactForm: React.FC<IContactFormProps> = () => {
 			</Form>
 		</Col>
     );
-}
-
-export interface IContactFormProps {}
+};
 
 export default ContactForm;

@@ -4,7 +4,7 @@ import { IBlog } from '../utils/interfaces';
 import { api } from '../utils/api-services';
 import BlogCard from '../components/BlogCard';
 
-const SearchResults: React.FC<ISearchResultsProps> = props => {
+const SearchResults = () => {
 	
 	const location = useLocation<{ query: string }>();
 	const query = location.state?.query || '';
@@ -26,8 +26,6 @@ const SearchResults: React.FC<ISearchResultsProps> = props => {
 			</section>
 		</main>
 	);
-}
-
-export interface ISearchResultsProps {}
+};
 
 export default SearchResults;

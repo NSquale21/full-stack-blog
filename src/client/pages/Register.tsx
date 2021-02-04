@@ -1,7 +1,7 @@
 import * as React from 'react';
 import RegisterForm from '../components/RegisterForm';
 
-const Register: React.FC<IRegisterProps> = () => {
+const Register = () => {
     return (
         <main>
             <section className="row justify-content-center">
@@ -9,8 +9,6 @@ const Register: React.FC<IRegisterProps> = () => {
 			</section>
         </main>
     );
-}
-
-export interface IRegisterProps {}
+};
 
 export default Register;

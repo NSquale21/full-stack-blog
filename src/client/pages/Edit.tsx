@@ -1,7 +1,7 @@
 import * as React from 'react';
 import EditForm from '../components/EditForm';
 
-const Edit: React.FC<IEditFormProps> = () => {
+const Edit = () => {
   return (
 		<main>
 			<section>
@@ -9,8 +9,6 @@ const Edit: React.FC<IEditFormProps> = () => {
 			</section>
 		</main>
 	);
-}
-
-export interface IEditFormProps {}
+};
 
 export default Edit;

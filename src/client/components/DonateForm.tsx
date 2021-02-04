@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Button, Col, Form, InputGroup } from 'react-bootstrap';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { api } from '../utils/api-services';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Button, Col, Form, InputGroup } from 'react-bootstrap';
 
-const DonateForm: React.FC<IDonateFormProps> = () => {
+const DonateForm = () => {
     
     const stripe = useStripe();
     const elements = useElements();
@@ -75,8 +75,6 @@ const DonateForm: React.FC<IDonateFormProps> = () => {
             </Form>
         </Col>
     );
-}
-
-export interface IDonateFormProps {}
+};
 
 export default DonateForm;

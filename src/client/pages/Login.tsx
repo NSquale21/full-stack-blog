@@ -1,16 +1,14 @@
 import * as React from 'react';
 import LoginForm from '../components/LoginForm';
 
-const Login: React.FC<ILoginProps> = () => {
+const Login = () => {
     return (
-			<main>
-				<section className="row justify-content-center">
-					<LoginForm />
-				</section>
-			</main>
+		<main>
+			<section className="row justify-content-center">
+				<LoginForm />
+			</section>
+		</main>
     );
-}
-
-export interface ILoginProps {}
+};
 
 export default Login;

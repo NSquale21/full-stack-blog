@@ -6,7 +6,7 @@ import { Elements } from '@stripe/react-stripe-js';
 
 const stripePromise = loadStripe('pk_test_51HDEs5AhQR1VV7jSEfAhmuwuBkOb65rFvbzdk1edMtSC9SPKmm5V0hf771PyeO4gBeoOgHIzS972XuHQ4oItpVDy00xn8kEca3');
 
-const Donate: React.FC<IDonateProps> = () => {
+const Donate = () => {
     return (
         <main>
             <section className="row justify-content-center">
@@ -16,8 +16,6 @@ const Donate: React.FC<IDonateProps> = () => {
             </section>
         </main>
     )
-}
-
-export interface IDonateProps {}
+};
 
 export default Donate;

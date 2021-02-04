@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom';
 import { IBlog, ITag, IComment } from '../utils/interfaces';
 import DetailsCard from '../components/DetailsCard';
 
-const Details: React.FC<IDetailsProps> = () => {
+const Details = () => {
   
-  const { id } = useParams();
+  const { id } = useParams<{ id: string}>();
   const [blog, setBlog] = React.useState<IBlog>(null);
   const [tag, setTag] = React.useState<ITag>(null);
   const [comments, setComments] = React.useState<IComment[]>([]);
@@ -15,6 +15,7 @@ const Details: React.FC<IDetailsProps> = () => {
       let res = await fetch(`/api/comments/${id}`);
     if (res.ok) {
       let comments = await res.json();
+      console.log(comments);
       setComments(comments);
     }
     })()
@@ -36,7 +37,5 @@ const Details: React.FC<IDetailsProps> = () => {
     <DetailsCard blog={blog} tag={tag} comments={comments} getComments={getComments}  /> 
 	);
 };
-
-export interface IDetailsProps {}
 
 export default Details;

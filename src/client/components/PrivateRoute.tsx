@@ -32,7 +32,7 @@ const PrivateRoute: React.FC<IPrivateRoute> = ({ children, ...rest }) => {
     } else {
         return <Redirect to="/login"/>
     }
-}
+};
 
 export interface IPrivateRoute {
     exact: boolean,

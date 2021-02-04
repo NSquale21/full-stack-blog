@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Jumbotron, Container } from 'react-bootstrap';
 
-const JumboTron: React.FC<IJumboTronProps> = () => {
+const JumboTron = () => {
   return (
 		<Jumbotron fluid>
   		<Container className="d-flex justify-content-center">
@@ -9,13 +9,6 @@ const JumboTron: React.FC<IJumboTronProps> = () => {
   		</Container>
 		</Jumbotron>
 	);
-}
-
-export interface IJumboTronProps {}
+};
 
 export default JumboTron;
-
-
-// style={{ width: '319px', height: '202px' }}
-
-// style={{ width: '19.94em', height: '12.63em' }}

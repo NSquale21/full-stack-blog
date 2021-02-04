@@ -6,7 +6,7 @@ import { urlRegex } from '../utils/url-regex';
 import { api } from '../utils/api-services';
 import { Card, Col } from 'react-bootstrap';
 
-const BlogCard: React.FC<IBlogCardProps> = props => {
+const BlogCard = (props: BlogCardProps) => {
 	
 	const [tag, setTag] = React.useState<ITag>(null);
 	const name = `/tags/${tag?.tag_name}`;
@@ -24,22 +24,23 @@ const BlogCard: React.FC<IBlogCardProps> = props => {
 				<Card.Img alt="no image available" variant="top" src={props.blog.image_url} />
 				<Card.Body className="d-flex flex-column justify-content-between">
 					<div>
-						<Card.Title>{props.blog.title}</Card.Title>
-						<Card.Text>by: {props.blog.name}</Card.Text>
+						<Card.Title className="title">{props.blog.title}</Card.Title>
+						<Card.Text className="dark-gray">by: {props.blog.name}</Card.Text>
 					</div>
 					<div className="d-flex flex-column">
 						<Link to={name.toLowerCase()} className="badge badge-primary my-2">{tag?.tag_name}</Link>
 						<Link to={`/blogs/details/${props.blog.id}/${urlRegex(props.blog.title)}`} className="btn btn-outline-primary btn-sm btn-block mx-auto w-75">Read More</Link>
 					</div>
 				</Card.Body>
-				<Card.Footer className="text-center">{moment(props.blog.created_at).format('MMM Do YY')}</Card.Footer>
+				<Card.Footer className="text-center dark-gray">{moment(props.blog.created_at).format('MMM Do YY')}</Card.Footer>
 			</Card>
 		</Col>
 	);
-}
+};
 
-export interface IBlogCardProps {
+export interface BlogCardProps {
 	blog: IBlog;
+	childen?: React.ReactNode;
 }
 
 export default BlogCard;

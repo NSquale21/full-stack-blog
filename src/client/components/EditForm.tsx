@@ -5,9 +5,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import { api } from '../utils/api-services';
 import { Col, Form, Button, Card } from 'react-bootstrap';
 
-const EditForm: React.FC<IEditFormProps> = () => {
+const EditForm = () => {
 
-	const { id } = useParams();
+	const { id } = useParams<{ id: string}>();
 	const history = useHistory();
 	
 	const [blog, setBlog] = React.useState<IBlog>(null);
@@ -41,7 +41,7 @@ const EditForm: React.FC<IEditFormProps> = () => {
 		e.preventDefault();
 		const res = await api(`/api/blogs/${id}`, 'PUT', { title, image_url, content, tag_id: selectedId });
 		history.push(`/blogs/details/${id}`);
-	}
+	};
 
 	return (
 		<main>
@@ -96,8 +96,6 @@ const EditForm: React.FC<IEditFormProps> = () => {
 			</section>
 		</main>
 	);
-}
-
-export interface IEditFormProps {}
+};
 
 export default EditForm;
