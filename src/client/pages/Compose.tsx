@@ -1,30 +1,30 @@
 import * as React from 'react';
 import * as ReactMarkdown from 'react-markdown';
-import { ITag } from '../utils/interfaces';
 import { useHistory } from 'react-router-dom';
-import { Col, Form, Button, Card } from 'react-bootstrap';
 import { api } from '../utils/api-services';
+import { ITag } from '../utils/interfaces';
+import { Col, Form, Button, Card } from 'react-bootstrap';
 
-const Compose: React.FC<IComposeProps> = () => {
+const Compose = () => {
 
 	const history = useHistory();
 	
-	const [title, setTitle] = React.useState<string>('');
-	const [image_url, setURL] = React.useState<string>('');
+	const [values, setValues] = React.useState<{ [key: string] : string }>({});
 	const [tags, setTags] = React.useState<ITag[]>([]);
 	const [selectedId, setSelectedId] = React.useState<string>('0');
-	const [content, setContent] = React.useState<string>('');
-
-	const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-	const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => setURL(e.target.value);
+	
 	const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => setSelectedId(e.target.value);
-	const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.persist();
+        setValues((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+    };
 
 	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
-		const res = await api('/api/blogs', 'POST', { title, image_url, content, tag_id: selectedId })
+		const res = await api('/api/blogs', 'POST', { ...values, tag_id: selectedId });
 		history.push('/');
-	}
+	};
 
 	React.useEffect(() => {
 		(async () => {
@@ -41,17 +41,17 @@ const Compose: React.FC<IComposeProps> = () => {
 						<Form.Group>
 							<Form.Label>Title</Form.Label>
 							<Form.Control 
-								value={title} 
-								onChange={handleTitleChange} 
-								type="text" 
+								value={values.title || ''} 
+								name="title"
+								onChange={handleChange} 
 								placeholder="Enter title here..." />
 						</Form.Group>
 						<Form.Group>
 							<Form.Label>Image URL</Form.Label>
 							<Form.Control 
-								value={image_url} 
-								onChange={handleUrlChange} 
-								type="text" 
+								value={values.image_url || ''}
+								name="image_url"
+								onChange={handleChange}
 								placeholder="Enter image URL here..." />
 						</Form.Group>
 						<Form.Group>
@@ -65,8 +65,9 @@ const Compose: React.FC<IComposeProps> = () => {
 						<Form.Group>
 							<Form.Label>Content</Form.Label>
 							<Form.Control 
-								value={content}
-								onChange={handleContentChange}
+								value={values.content || ''}
+								name="content"
+								onChange={handleChange}
 								as="textarea" 
 								rows={3}
 								placeholder="Enter text here..." />
@@ -78,16 +79,14 @@ const Compose: React.FC<IComposeProps> = () => {
 				<Col md={6}>
 					<Card className="shadow-sm">
 						<Card.Body>
-							<Card.Title>{title}</Card.Title>
-							<ReactMarkdown source={content}></ReactMarkdown>
+							<Card.Title>{values.title}</Card.Title>
+							<ReactMarkdown source={values.content}></ReactMarkdown>
 						</Card.Body>
 					</Card> 
 				</Col>
 			</section>
 		</main>
 	);
-}
-
-export interface IComposeProps {}
+};
 
 export default Compose;
