@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Col, Button, Form } from 'react-bootstrap';
 import { api, setLogin } from '../utils/api-services';
+import { Col, Button, Form } from 'react-bootstrap';
 
-const LoginForm: React.FC<ILoginFormProps> = () => {
+const LoginForm = () => {
 
 	const history = useHistory();
 		
@@ -17,28 +17,12 @@ const LoginForm: React.FC<ILoginFormProps> = () => {
 		setValues((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
 	};
 
-	// const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-	// 	e.preventDefault();
-	// 	const res = await fetch('/auth/login', {
-	// 		method: 'POST',
-	// 		headers: {
-	// 			'Content-Type': 'application/json'
-	// 		},
-	// 		body: JSON.stringify(values)
-	// 	});
-	// 	console.log(res.ok);
-	// 	if (res.ok) {
-	// 		const info = await res.json();
-	// 		localStorage.setItem('token', info);
-	// 	}
-	// };
-
 	const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		const info = await api('/auth/login', 'POST', values);
 		localStorage.setItem('token', info);
 		setLogin(info);
-		history.push('/compose');
+		history.push('/profile');
 	};
 
 	return (
@@ -65,11 +49,12 @@ const LoginForm: React.FC<ILoginFormProps> = () => {
 				<Button onClick={handleLogin} variant="outline-primary" type="submit" className="w-75 mx-auto" block>
 					Login
 				</Button>
+				<small className="m-3 form-text text-muted text-center">
+                        Not a member yet? <a href="/register">Register</a> now.
+                </small>
 			</Form>
 		</Col>
   );
-}
-
-export interface ILoginFormProps {}
+};
 
 export default LoginForm;

@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { api } from '../utils/api-services';
 import { Col, Button, Form } from 'react-bootstrap';
 
-const RegisterForm: React.FC<IRegisterFormProps> = () => {
+const RegisterForm = () => {
     
 	const history = useHistory();
 	
@@ -22,7 +22,7 @@ const RegisterForm: React.FC<IRegisterFormProps> = () => {
 		e.preventDefault();
 		const info = await api('/auth/register', 'POST', values);
 		localStorage.setItem('token', info);
-		history.push('/profile');
+		history.push('/admin');
 	};
 
     return (
@@ -61,8 +61,6 @@ const RegisterForm: React.FC<IRegisterFormProps> = () => {
 			</Form>
 		</Col>
     );
-}
-
-export interface IRegisterFormProps {}
+};
 
 export default RegisterForm;
