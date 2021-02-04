@@ -3,6 +3,14 @@ $theme-colors: (
 	'secondary': #5466AA
 );
 
+.title {
+	color: #2B2B2B;
+}
+
+.dark-gray {
+	color: #1A1A1A;
+}
+
 .nav-link {
 	text-decoration: none;
 }
@@ -26,6 +34,19 @@ $theme-colors: (
 
 .image {
 	max-width: 300px;
+}
+
+a:hover {
+	color: white;
+}
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.page-container {
+	min-height: 100vh;
 }
 
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
