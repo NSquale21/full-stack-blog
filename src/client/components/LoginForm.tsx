@@ -7,10 +7,7 @@ const LoginForm = () => {
 
 	const history = useHistory();
 		
-	const [values, setValues] = React.useState<{ [key: string]: string }>({
-		email: 'testuser@gmail.com',
-		password: 'password123'
-	});
+	const [values, setValues] = React.useState<{ [key: string]: string }>({});
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.persist();
