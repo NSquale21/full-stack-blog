@@ -53,8 +53,8 @@ const NavBar = () => {
 							to="/donate" 
 							activeClassName="text-secondary">Donate</NavLink>
 					</Nav.Item>
+					{ Token && 
 					<Nav.Item>
-						{Token ? (
 							<NavLink
 								onClick={() => setShow(false)}
 								className="nav-link" 
@@ -62,15 +62,8 @@ const NavBar = () => {
 								activeClassName="text-secondary">
 								Profile
 							</NavLink>
-						) : (
-							<NavLink
-								onClick={() => setShow(false)}
-								className="nav-link" 
-								to="/login" 
-								activeClassName="text-secondary">
-								Profile
-							</NavLink>)}
 					</Nav.Item>
+					}
 					<Nav.Item>
 						{Token ? (
 							<NavLink 
