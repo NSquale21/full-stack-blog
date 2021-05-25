@@ -75,7 +75,8 @@ const style = [
 	'font-weight: bold',
 	'font-size: large'
   ].join(';');
-  console.log('%cI am looking to get hired...if you like my project, we should talk:', style);
+  console.log('%cI am looking to get hired...if you like my project, we should talk!', style);
+  console.log('%cContact me at:', style);
   console.log('%cNSquale212@gmail.com', style);
 
 export default App;
